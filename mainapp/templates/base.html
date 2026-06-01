@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title1 %} Главная{% endblock %} </title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <!-- Графическая и текстовая ссылка на начальную страницу -->
+                <a href="{% url 'home' %}" class="nav-logo">
+                    Главная
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="{% url 'page1' %}">Страница 1</a></li>
+                    <li><a href="{% url 'page2' %}">Страница 2</a></li>
+                    <li><a href="{% url 'education' %}">Образование</a></li>
+                    <li><a href="{% url 'task_solution' %}">Задача</a></li>
+                    <!-- Ссылка на закладку (внутренний фрагмент страницы "Образование") -->
+                    <li><a href="{% url 'education' %}#classmates">Сокурсники</a></li>
+                    <!-- Внешние ссылки, открываются в новом окне -->
+                    <li><a href="https://www.python.org/" target="_blank">Python.org</a></li>
+                    <li><a href="https://www.djangoproject.com/" target="_blank">Django</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; Главная</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Образовательная программа{% endblock %}
+
+{% block content %}
+<h1>Я и моя образовательная программа</h1>
+
+<ul class="page-nav">
+    <li><a href="#about-me">Обо мне</a></li>
+    <li><a href="#program">О программе</a></li>
+    <li><a href="#classmates">Мои сокурсники</a></li>
+    <li><a href="#">К началу</a></li>
+</ul>
+
+<section id="about-me">
+    <h2>Обо мне</h2>
+    <div class="person-card">
+        <div class="person-details">
+            <p><strong>ФИО:</strong> {{ student.full_name }}</p>
+            <p><strong>Email:</strong> {{ student.email }}</p>
+            <p><strong>Телефон:</strong> {{ student.phone }}</p>
+        </div>
+    </div>
+</section>
+
+<section id="program">
+    <h2>Образовательная программа</h2>
+    <p><strong>Название:</strong> {{ program.name }}</p>
+    <p><strong>Описание:</strong> {{ program.description }}</p>
+    <h3>Руководитель программы</h3>
+    <div class="person-card">
+        <div class="person-details">
+            <p><strong>{{ head.full_name }}</strong></p>
+            <p>Email: {{ head.email }}</p>
+        </div>
+    </div>
+    <h3>Менеджер программы</h3>
+    <div class="person-card">
+        <div class="person-details">
+            <p><strong>{{ manager.full_name }}</strong></p>
+            <p>Email: {{ manager.email }}</p>
+        </div>
+    </div>
+</section>
+
+<section id="classmates">
+    <h2>Мои сокурсники</h2>
+    <div class="classmates-list">
+        {% for classmate in classmates %}
+        <div class="person-card">
+            <div class="person-details">
+                <p><strong>{{ classmate.name }}</strong></p>
+                <p>Email: {{ classmate.email }}</p>
+                <p>Телефон: {{ classmate.phone }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

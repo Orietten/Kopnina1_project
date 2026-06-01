@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Решение задачи {% endblock %}
+
+{% block content %}
+<h1>Решение алгоритмической задачи №1004</h1>
+
+<ul class="page-nav">
+    <li><a href="#condition">Условие</a></li>
+    <li><a href="#analysis">Анализ</a></li>
+    <li><a href="#solution">Решение</a></li>
+    <li><a href="#calc">Калькулятор</a></li>
+    <li><a href="#">К началу</a></li>
+</ul>
+
+<section id="condition">
+    <h2>Условие задачи</h2>
+    <div class="task-box">
+        <p>Можно ли в квадратном зале площадью S поместить круглую сцену радиусом R так, чтобы от стены до сцены был проход не менее K?</p>
+    </div>
+    <figure>
+        <figure class="task-figure">
+            <svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Квадратный зал -->
+                <rect x="50" y="50" width="300" height="300" fill="none" stroke="black" stroke-width="2"/>
+                <!-- Круглая сцена -->
+                <circle cx="200" cy="200" r="80" fill="none" stroke="red" stroke-width="2" stroke-dasharray="5,3"/>
+                <!-- Линии прохода K -->
+                <line x1="50" y1="200" x2="120" y2="200" stroke="blue" stroke-width="1" stroke-dasharray="4,2"/>
+                <line x1="280" y1="200" x2="350" y2="200" stroke="blue" stroke-width="1" stroke-dasharray="4,2"/>
+                <line x1="200" y1="50" x2="200" y2="120" stroke="blue" stroke-width="1" stroke-dasharray="4,2"/>
+                <line x1="200" y1="280" x2="200" y2="350" stroke="blue" stroke-width="1" stroke-dasharray="4,2"/>
+                <!-- Текст (обозначения) -->
+                <text x="200" y="30" text-anchor="middle" font-size="12">Сторона a = √S</text>
+                <text x="380" y="200" text-anchor="start" font-size="12">Проход K</text>
+                <text x="200" y="380" text-anchor="middle" font-size="12">Радиус R</text>
+                <text x="280" y="180" text-anchor="start" font-size="12" fill="red">Сцена</text>
+                <!-- Подписи к линиям K -->
+                <text x="85" y="190" font-size="10" fill="blue">K</text>
+                <text x="310" y="190" font-size="10" fill="blue">K</text>
+                <text x="195" y="85" font-size="10" fill="blue">K</text>
+                <text x="195" y="315" font-size="10" fill="blue">K</text>
+            </svg>
+            <figcaption>Рис. 1. Геометрическая схема: квадратный зал со стороной a = √S, круглая сцена радиуса R, минимальный проход K от стены до сцены.</figcaption>
+        </figure>
+        <figcaption>Рис. 1. Геометрическая схема задачи.</figcaption>
+    </figure>
+</section>
+
+<section id="analysis">
+    <h2>Анализ</h2>
+    <ol>
+        <li>Сторона квадрата: a = √S</li>
+        <li>Максимальный радиус сцены с учётом прохода K: R<sub>max</sub> = a/2 - K</li>
+        <li>Условие: R ≤ R<sub>max</sub></li>
+    </ol>
+    <p>Если K > a/2, то размещение невозможно.</p>
+</section>
+
+<section id="solution">
+    <h2>Формула решения</h2>
+    <div class="solution-formula">
+        <p>Ответ: сцену можно разместить тогда и только тогда, когда <code>R ≤ (√S)/2 - K</code>.</p>
+    </div>
+</section>
+
+<section id="calc">
+    <h2>Калькулятор</h2>
+    <form method="post" class="calc-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="area">Площадь S (м²):</label>
+            <input type="number" name="area" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="radius">Радиус R (м):</label>
+            <input type="number" name="radius" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="passage">Проход K (м):</label>
+            <input type="number" name="passage" step="0.01" required>
+        </div>
+        <button type="submit" class="btn">Проверить</button>
+    </form>
+
+    {% if result is not None %}
+    <div class="result-box {% if result %}result-success{% else %}result-failure{% endif %}">
+        <p>a = {{ a_value|floatformat:2 }} м, R<sub>max</sub> = {{ r_max|floatformat:2 }} м</p>
+        <p class="result-text">
+            {% if result %}
+            ✅ Да, сцену можно разместить.
+            {% else %}
+            ❌ Нет, сцену нельзя разместить.
+            {% endif %}
+        </p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
